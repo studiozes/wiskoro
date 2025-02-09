@@ -16,8 +16,6 @@
             --chat-bg-dark: #2a2a2a;
             --border-color-light: #ddd;
             --border-color-dark: #444;
-            --message-text-light: #000;
-            --message-text-dark: #fff;
             --button-color: #007aff;
             --button-hover: #005ecb;
         }
@@ -43,10 +41,15 @@
             }
         }
 
+        .logo {
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
         #chat-container {
             width: 90%;
-            max-width: 450px;
-            height: 500px;
+            max-width: 600px;
+            height: 70vh;
             margin: auto;
             border: 1px solid var(--border-color-light);
             padding: 15px;
@@ -75,7 +78,6 @@
             font-size: 16px;
             display: inline-block;
             animation: fadeIn 0.3s ease-in-out;
-            color: #000 !important;
         }
 
         @keyframes fadeIn {
@@ -137,7 +139,7 @@
     </style>
 </head>
 <body>
-    <h2>Wiskoro Chatbot</h2>
+    <img src="wiskoro-logo.png" alt="Wiskoro Logo" class="logo">
     <div id="chat-container">
         <div id="chat-box"></div>
         <div class="input-container">
