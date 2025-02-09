@@ -45,18 +45,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 5px;
-            margin-bottom: 5px;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .logo {
             height: 48px;
-        }
-
-        .title {
-            font-size: 32px;
-            font-weight: 600;
-            margin: 0;
         }
 
         #chat-container {
@@ -72,7 +66,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         #chat-box {
@@ -155,7 +149,6 @@
 <body>
     <div class="logo-container">
         <img src="wiskoro-logo.png" alt="Wiskoro Logo" class="logo">
-        <div class="title">Wiskoro</div>
     </div>
     <div id="chat-container">
         <div id="chat-box"></div>
@@ -168,18 +161,31 @@
     <script>
         const backendUrl = "https://wiskoro-backend.up.railway.app/chat";
         const buttonTexts = ["Gooi eruit", "Drop die vraag", "Spit die wiskunde", "Knallen maar", "Tik die som"];
+        const welcomeMessages = [
+            "Faka, welkom bij Wiskoro! 🔥", 
+            "Yo! Ready om wiskunde te ownen? 📚", 
+            "Ey, goed dat je er bent! Laten we knallen! 🚀", 
+            "Bro, tijd om te leren en te flexen met wiskunde!", 
+            "Let's go! Wiskunde is geen stress met Wiskoro!"
+        ];
+        
         const sendButton = document.getElementById("send-button");
+        const chatBox = document.getElementById("chat-box");
 
         function updateButtonText() {
             sendButton.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
         }
-
+        
+        function showWelcomeMessage() {
+            const message = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+            chatBox.innerHTML += `<div class='message bot'>${message}</div>`;
+        }
+        
         async function sendMessage() {
             let inputField = document.getElementById("user-input");
             let message = inputField.value.trim();
             if (message === "") return;
             
-            let chatBox = document.getElementById("chat-box");
             chatBox.innerHTML += `<div class='message user'>${message}</div>`;
             inputField.value = "";
             updateButtonText();
@@ -193,6 +199,8 @@
             }
             chatBox.scrollTop = chatBox.scrollHeight;
         }
+        
+        showWelcomeMessage();
     </script>
 </body>
 </html>
