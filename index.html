@@ -8,16 +8,22 @@
     <style>
         :root {
             color-scheme: light dark;
-            --bg-color-light: #f9f9f9;
-            --text-color-light: #333;
-            --bg-color-dark: #1e1e1e;
-            --text-color-dark: #f5f5f5;
+            --bg-color-light: #fefefe;
+            --text-color-light: #1c1c1e;
+            --bg-color-dark: #1c1c1e;
+            --text-color-dark: #fefefe;
             --chat-bg-light: #ffffff;
-            --chat-bg-dark: #2a2a2a;
-            --border-color-light: #ddd;
-            --border-color-dark: #444;
+            --chat-bg-dark: #2c2c2e;
+            --border-color-light: rgba(0, 0, 0, 0.1);
+            --border-color-dark: rgba(255, 255, 255, 0.1);
             --button-color: #007aff;
             --button-hover: #005ecb;
+            --shadow-light: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-dark: 0px 4px 12px rgba(255, 255, 255, 0.1);
+            --message-bg-user: #007aff;
+            --message-text-user: #fff;
+            --message-bg-bot: #f2f2f7;
+            --message-text-bot: #000;
         }
 
         body {
@@ -53,6 +59,16 @@
             background-color: var(--chat-bg-light);
             padding: 10px;
             box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            #chat-container {
+                background-color: var(--chat-bg-dark);
+                box-shadow: var(--shadow-dark);
+            }
         }
 
         #chat-box {
@@ -60,38 +76,41 @@
             width: 100%;
             max-width: 800px;
             overflow-y: auto;
-            padding: 10px;
+            padding: 20px;
             box-sizing: border-box;
             scrollbar-width: thin;
+            display: flex;
+            flex-direction: column;
         }
 
         .message {
-            margin: 5px 0;
-            padding: 12px;
+            margin: 8px 0;
+            padding: 14px 18px;
             border-radius: 18px;
-            max-width: 80%;
-            font-size: 16px;
+            max-width: 75%;
+            font-size: 17px;
             display: inline-block;
             animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
         }
 
         .user {
-            background-color: #007aff;
-            color: #fff;
+            background-color: var(--message-bg-user);
+            color: var(--message-text-user);
             align-self: flex-end;
             text-align: right;
         }
 
         .bot {
-            background-color: #f1f1f1;
-            color: #000;
+            background-color: var(--message-bg-bot);
+            color: var(--message-text-bot);
             align-self: flex-start;
             text-align: left;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .input-container {
@@ -106,25 +125,28 @@
 
         input {
             flex-grow: 1;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 18px;
-            border: 1px solid #ccc;
+            padding: 14px;
+            font-size: 17px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color-light);
             background-color: #fff;
             color: #333;
-            text-align: center;
+            text-align: left;
+            padding-left: 20px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease-in-out;
         }
 
         button {
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 18px;
+            padding: 14px 20px;
+            font-size: 17px;
+            border-radius: 25px;
             border: none;
             background-color: var(--button-color);
             color: white;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
         }
 
         button:hover {
@@ -148,32 +170,11 @@
     <script>
         const backendUrl = "https://wiskoro-backend.up.railway.app/chat";
         const buttonTexts = ["Gooi eruit", "Drop die vraag", "Spit die wiskunde", "Knallen maar", "Tik die som"];
-        const welcomeMessages = [
-            "Faka, welkom bij Wiskoro! 🔥 Tijd om je wiskunde skills te boosten!", 
-            "Yo! Klaar om wiskunde te ownen? Ik fix die uitleg voor je! 📚", 
-            "Ey, jij daar! Pak je sommen, want we gaan gas geven op wiskunde! 🚀", 
-            "Bro, geen stress! Met Wiskoro maak jij wiskunde je playground!", 
-            "Let's go! Hier leer je wiskunde met de meeste sauce! 🧠💯",
-            "Skeer op wiskunde? Niet meer! Tijd om te shinen met Wiskoro! ✨",
-            "Hé legend! Vandaag is de dag dat je wiskunde mastert! 👑",
-            "Wiskunde is geen drill, maar jij gaat het killen! 💪🔥",
-            "Yo, yo, yo! Pak je brein en let's gooo! 🧠⚡",
-            "Geen paniek, wiskunde wordt easy met Wiskoro! 😎"
-        ];
-        
         const sendButton = document.getElementById("send-button");
-        const chatBox = document.getElementById("chat-box");
 
         function updateButtonText() {
             sendButton.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
         }
-        
-        function showWelcomeMessage() {
-            const message = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
-            chatBox.innerHTML += `<div class='message bot'>${message}</div>`;
-        }
-        
-        showWelcomeMessage();
     </script>
 </body>
 </html>
