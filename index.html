@@ -15,6 +15,8 @@
             --chat-bg-dark: #2a2a2a;
             --border-color-light: #ddd;
             --border-color-dark: #444;
+            --message-text-light: #000;
+            --message-text-dark: #fff;
         }
 
         body {
@@ -65,18 +67,27 @@
             border-radius: 8px;
             width: 100%;
             box-sizing: border-box;
+            color: var(--message-text-light);
         }
 
         .user {
             background-color: #d1e7dd;
             text-align: right;
             border-radius: 12px;
+            color: #000;
         }
 
         .bot {
             background-color: #f8d7da;
             text-align: left;
             border-radius: 12px;
+            color: #000;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .user, .bot {
+                color: var(--message-text-dark);
+            }
         }
 
         .input-container {
