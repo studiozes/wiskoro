@@ -41,9 +41,22 @@
             }
         }
 
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
         .logo {
             height: 48px;
-            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0;
         }
 
         #chat-container {
@@ -139,7 +152,10 @@
     </style>
 </head>
 <body>
-    <img src="wiskoro-logo.png" alt="Wiskoro Logo" class="logo">
+    <div class="logo-container">
+        <img src="wiskoro-logo.png" alt="Wiskoro Logo" class="logo">
+        <div class="title">Wiskoro</div>
+    </div>
     <div id="chat-container">
         <div id="chat-box"></div>
         <div class="input-container">
