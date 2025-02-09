@@ -46,7 +46,7 @@
             flex-direction: column;
             align-items: center;
             gap: 0;
-            margin-bottom: 0;
+            margin-bottom: -5px;
         }
 
         .logo {
@@ -165,7 +165,12 @@
             "Yo! Klaar om wiskunde te ownen? Ik fix die uitleg voor je! 📚", 
             "Ey, jij daar! Pak je sommen, want we gaan gas geven op wiskunde! 🚀", 
             "Bro, geen stress! Met Wiskoro maak jij wiskunde je playground!", 
-            "Let's go! Hier leer je wiskunde met de meeste sauce! 🧠💯"
+            "Let's go! Hier leer je wiskunde met de meeste sauce! 🧠💯",
+            "Skeer op wiskunde? Niet meer! Tijd om te shinen met Wiskoro! ✨",
+            "Hé legend! Vandaag is de dag dat je wiskunde mastert! 👑",
+            "Wiskunde is geen drill, maar jij gaat het killen! 💪🔥",
+            "Yo, yo, yo! Pak je brein en let's gooo! 🧠⚡",
+            "Geen paniek, wiskunde wordt easy met Wiskoro! 😎"
         ];
         
         const sendButton = document.getElementById("send-button");
@@ -178,25 +183,6 @@
         function showWelcomeMessage() {
             const message = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
             chatBox.innerHTML += `<div class='message bot'>${message}</div>`;
-        }
-        
-        async function sendMessage() {
-            let inputField = document.getElementById("user-input");
-            let message = inputField.value.trim();
-            if (message === "") return;
-            
-            chatBox.innerHTML += `<div class='message user'>${message}</div>`;
-            inputField.value = "";
-            updateButtonText();
-            
-            try {
-                let response = await fetch(backendUrl + "?input_text=" + encodeURIComponent(message));
-                let data = await response.json();
-                chatBox.innerHTML += `<div class='message bot'>${data.response}</div>`;
-            } catch (error) {
-                chatBox.innerHTML += `<div class='message bot'>Error bij ophalen van antwoord. 🤖</div>`;
-            }
-            chatBox.scrollTop = chatBox.scrollHeight;
         }
         
         showWelcomeMessage();
