@@ -73,8 +73,8 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 8px;
-            max-width: 80%;
-            color: var(--message-text-light);
+            width: calc(100% - 20px);
+            box-sizing: border-box;
         }
 
         .user {
@@ -83,6 +83,7 @@
             align-self: flex-end;
             border-radius: 12px;
             color: var(--message-text-light);
+            margin-right: 0;
         }
 
         .bot {
@@ -91,6 +92,7 @@
             align-self: flex-start;
             border-radius: 12px;
             color: var(--message-text-light);
+            margin-left: 0;
         }
 
         .input-container {
