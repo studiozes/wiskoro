@@ -10,9 +10,10 @@
     <style>
         :root {
             color-scheme: light dark;
+            /* Basis kleuren definities */
             --bg-color-light: #f9f9f9;
-            --text-color-light: #333;
             --bg-color-dark: #1e1e1e;
+            --text-color-light: #333;
             --text-color-dark: #f5f5f5;
             --chat-bg-light: #ffffff;
             --chat-bg-dark: #2a2a2a;
@@ -25,6 +26,28 @@
             --message-bg-bot-light: #f1f1f1;
             --message-bg-bot-dark: #3a3a3a;
             --focus-outline: #4a9eff;
+            
+            /* Default light mode waarden */
+            --bg-color: var(--bg-color-light);
+            --text-color: var(--text-color-light);
+            --chat-bg: var(--chat-bg-light);
+            --border-color: var(--border-color-light);
+            --button-color: var(--button-color-light);
+            --button-hover: var(--button-hover-light);
+            --message-bg-bot: var(--message-bg-bot-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark mode waarden */
+                --bg-color: var(--bg-color-dark);
+                --text-color: var(--text-color-dark);
+                --chat-bg: var(--chat-bg-dark);
+                --border-color: var(--border-color-dark);
+                --button-color: var(--button-color-dark);
+                --button-hover: var(--button-hover-dark);
+                --message-bg-bot: var(--message-bg-bot-dark);
+            }
         }
 
         html, body {
@@ -42,48 +65,10 @@
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             line-height: 1.5;
             text-align: center;
-            background-color: var(--bg-color-light);
-            color: var(--text-color-light);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
             flex-direction: column;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: var(--bg-color-dark);
-                color: var(--text-color-dark);
-            }
-
-            #chat-container {
-                background-color: var(--chat-bg-dark);
-            }
-
-            #user-input {
-                background-color: var(--chat-bg-dark);
-                color: var(--text-color-dark);
-                border-color: var(--border-color-dark);
-            }
-
-            .input-container {
-                background-color: var(--chat-bg-dark);
-            }
-
-            .bot {
-                background-color: var(--message-bg-bot-dark);
-                color: var(--text-color-dark);
-            }
-
-            .user {
-                background-color: var(--button-color-dark);
-            }
-
-            button {
-                background-color: var(--button-color-dark);
-            }
-
-            button:hover {
-                background-color: var(--button-hover-dark);
-            }
         }
 
         #chat-container {
@@ -99,7 +84,7 @@
             height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: var(--chat-bg-light);
+            background-color: var(--chat-bg);
             overflow: hidden;
         }
 
@@ -133,14 +118,14 @@
         }
 
         .user {
-            background-color: var(--button-color-light);
-            color: #fff;
+            background-color: var(--button-color);
+            color: white;
             margin-left: auto;
         }
 
         .bot {
-            background-color: var(--message-bg-bot-light);
-            color: var(--text-color-light);
+            background-color: var(--message-bg-bot);
+            color: var(--text-color);
             margin-right: auto;
         }
 
@@ -153,7 +138,7 @@
             gap: 0.5rem;
             padding: 1rem;
             padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-            background-color: var(--chat-bg-light);
+            background-color: var(--chat-bg);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             width: 100%;
@@ -166,11 +151,11 @@
             flex: 1;
             padding: 0.75rem 1rem;
             border-radius: 1rem;
-            border: 2px solid var(--border-color-light);
+            border: 2px solid var(--border-color);
             font-size: 1rem;
             transition: border-color 0.2s;
-            background-color: var(--chat-bg-light);
-            color: var(--text-color-light);
+            background-color: var(--chat-bg);
+            color: var(--text-color);
         }
 
         #user-input:focus {
@@ -184,7 +169,7 @@
             font-size: 1rem;
             border-radius: 1rem;
             border: none;
-            background-color: var(--button-color-light);
+            background-color: var(--button-color);
             color: white;
             font-weight: 600;
             cursor: pointer;
@@ -192,7 +177,7 @@
         }
 
         button:hover {
-            background-color: var(--button-hover-light);
+            background-color: var(--button-hover);
         }
 
         button:focus {
