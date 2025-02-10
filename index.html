@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wiskoro Chatbot - Je eigen wiskunde GOAT">
     <title>Wiskoro Chatbot</title>
+    <link rel="preconnect" href="https://rsms.me">
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
         :root {
@@ -18,22 +20,25 @@
             --border-color-dark: #444;
             --button-color: #007aff;
             --button-hover: #005ecb;
+            --focus-outline: #4a9eff;
+        }
+
+        /* Reset en basis stijlen */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
             text-align: center;
-            margin: 0;
-            padding: 0;
             background-color: var(--bg-color-light);
             color: var(--text-color-light);
-            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            width: 100vw;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -44,105 +49,130 @@
         }
 
         #chat-container {
-            width: 100vw;
-            height: 100vh;
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+            height: 100vh;
             background-color: var(--chat-bg-light);
-            padding: 10px;
-            box-sizing: border-box;
         }
 
         #chat-box {
-            flex-grow: 1;
-            width: 100%;
-            max-width: 800px;
+            flex: 1;
             overflow-y: auto;
-            padding: 10px;
-            box-sizing: border-box;
-            scrollbar-width: thin;
+            padding: 1rem;
+            scroll-behavior: smooth;
         }
 
         .message {
-            margin: 5px 0;
-            padding: 12px;
-            border-radius: 18px;
+            margin: 0.5rem 0;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
             max-width: 80%;
-            font-size: 16px;
-            display: inline-block;
+            word-wrap: break-word;
             animation: fadeIn 0.3s ease-in-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { 
+                opacity: 0; 
+                transform: translateY(0.5rem); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         .user {
-            background-color: #007aff;
+            background-color: var(--button-color);
             color: #fff;
-            align-self: flex-end;
-            text-align: right;
+            margin-left: auto;
         }
 
         .bot {
             background-color: #f1f1f1;
             color: #000;
-            align-self: flex-start;
-            text-align: left;
+            margin-right: auto;
         }
 
         .input-container {
-            width: 100%;
-            max-width: 800px;
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
-            padding: 10px;
-            box-sizing: border-box;
+            gap: 0.75rem;
+            padding: 1rem;
+            background-color: var(--chat-bg-light);
         }
 
-        input {
-            flex-grow: 1;
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 18px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            color: #333;
-            text-align: center;
+        #user-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            border: 2px solid var(--border-color-light);
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        #user-input:focus {
+            outline: none;
+            border-color: var(--focus-outline);
+            box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
         }
 
         button {
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 18px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 1rem;
             border: none;
             background-color: var(--button-color);
             color: white;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            transition: background-color 0.2s, transform 0.1s;
         }
 
         button:hover {
             background-color: var(--button-hover);
         }
 
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--focus-outline);
+        }
+
         button:active {
-            transform: scale(0.95);
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                max-width: 90%;
+            }
+
+            .input-container {
+                padding: 0.75rem;
+            }
+
+            button {
+                padding: 0.75rem 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <div id="chat-box"></div>
-        <div class="input-container">
-            <input type="text" id="user-input" placeholder="Drop je vraag hier, bro...">
-            <button id="send-button" onclick="sendMessage()">Gooi eruit</button>
-        </div>
+        <div id="chat-box" role="log" aria-live="polite"></div>
+        <form class="input-container" onsubmit="handleSubmit(event)">
+            <input 
+                type="text" 
+                id="user-input" 
+                placeholder="Drop je vraag hier, bro..." 
+                aria-label="Je vraag"
+                autocomplete="off"
+            >
+            <button type="submit" id="send-button">Gooi eruit</button>
+        </form>
     </div>
 
     <script>
@@ -163,17 +193,80 @@
         
         const sendButton = document.getElementById("send-button");
         const chatBox = document.getElementById("chat-box");
+        const userInput = document.getElementById("user-input");
+        let isProcessing = false;
+
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
 
         function updateButtonText() {
-            sendButton.textContent = buttonTexts[Math.floor(Math.random() * buttonTexts.length)];
+            sendButton.textContent = getRandomItem(buttonTexts);
+        }
+        
+        function addMessage(content, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = content;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
         
         function showWelcomeMessage() {
-            const message = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
-            chatBox.innerHTML += `<div class='message bot'>${message}</div>`;
+            addMessage(getRandomItem(welcomeMessages), 'bot');
         }
-        
-        showWelcomeMessage();
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            
+            const message = userInput.value.trim();
+            if (!message || isProcessing) return;
+
+            isProcessing = true;
+            sendButton.disabled = true;
+            
+            try {
+                addMessage(message, 'user');
+                userInput.value = '';
+                updateButtonText();
+
+                const response = await fetch(backendUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Netwerk response was niet ok');
+                }
+
+                const data = await response.json();
+                addMessage(data.response || 'Sorry, er ging iets mis. Probeer het nog een keer!', 'bot');
+            } catch (error) {
+                console.error('Error:', error);
+                addMessage('Oeps! Er ging iets mis. Check je internet en probeer het nog een keer!', 'bot');
+            } finally {
+                isProcessing = false;
+                sendButton.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            showWelcomeMessage();
+            userInput.focus();
+        });
+
+        // Voorkom dubbele submits bij enter én button click
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendButton.click();
+            }
+        });
     </script>
 </body>
 </html>
