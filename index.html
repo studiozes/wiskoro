@@ -31,16 +31,14 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             position: fixed;
             width: 100%;
-            top: 0;
-            left: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
             font-family: 'Inter', system-ui, sans-serif;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
         }
 
         #chat-container {
@@ -49,9 +47,9 @@
             width: 100%;
             height: 100vh;
             background-color: var(--chat-bg);
-            overflow: hidden;
         }
 
+        /* ✅ Chatvenster stopt BOVEN de knop */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -59,6 +57,7 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
+            padding-bottom: 80px; /* Voorkomt dat berichten achter de knop vallen */
         }
 
         /* ✅ Chatballonnen */
