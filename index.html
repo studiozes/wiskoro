@@ -12,8 +12,8 @@
             color-scheme: light dark;
             --bg-color-light: #f9f9f9;
             --bg-color-dark: #1e1e1e;
-            --text-color-light: #000;
-            --text-color-dark: #fff;
+            --text-color-light: #333;
+            --text-color-dark: #f5f5f5;
             --chat-bg-light: #ffffff;
             --chat-bg-dark: #2a2a2a;
             --border-color-light: #ddd;
@@ -22,10 +22,8 @@
             --button-color-dark: #0a84ff;
             --button-hover-light: #005ecb;
             --button-hover-dark: #0070e6;
-            --message-bg-bot-light: #007aff;
-            --message-bg-bot-dark: #0a84ff;
-            --message-text-bot-light: #fff;
-            --message-text-bot-dark: #fff;
+            --message-bg-bot-light: #f1f1f1;
+            --message-bg-bot-dark: #3a3a3a;
             --focus-outline: #4a9eff;
         }
 
@@ -38,7 +36,6 @@
                 --button-color: var(--button-color-dark);
                 --button-hover: var(--button-hover-dark);
                 --message-bg-bot: var(--message-bg-bot-dark);
-                --message-text-bot: var(--message-text-bot-dark);
             }
         }
 
@@ -59,6 +56,11 @@
         }
 
         #chat-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -91,16 +93,9 @@
         }
 
         .bot {
-            background-color: var(--message-bg-bot-light);
-            color: var(--message-text-bot-light);
+            background-color: var(--message-bg-bot);
+            color: var(--text-color);
             margin-right: auto;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            .bot {
-                background-color: var(--message-bg-bot-dark);
-                color: var(--message-text-bot-dark);
-            }
         }
 
         .input-container {
@@ -111,7 +106,6 @@
             display: flex;
             justify-content: center;
             padding: 1rem;
-            padding-bottom: calc(1rem + env(safe-area-inset-bottom));
             background-color: var(--chat-bg);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
@@ -149,7 +143,6 @@
 
             .input-container {
                 padding: 0.75rem;
-                padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
             }
 
             #fact-button {
