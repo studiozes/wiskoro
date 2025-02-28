@@ -45,13 +45,12 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-color: var(--chat-bg);
             position: relative;
-            padding-bottom: 200px; /* 🛠 FIX: Houdt ruimte vrij voor de knop */
         }
 
-        /* ✅ **Laat berichten correct stoppen boven de knop** */
+        /* ✅ Laat berichten correct stoppen boven de knop */
         #chat-box {
             flex-grow: 1;
             overflow-y: auto;
@@ -59,7 +58,8 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            max-height: calc(100vh - 120px); /* 🛠 FIX: Voorkomt overlap met de button */
+            max-height: calc(100vh - 80px); /* 🛠 Dynamische hoogte voor berichten */
+            padding-bottom: 80px; /* Voorkomt overlap met de knop */
         }
 
         .message {
@@ -99,19 +99,14 @@
             color: white;
         }
 
-        /* ✅ **Laat berichten optisch verdwijnen onder de knop** */
+        /* ✅ Voorkomt dat berichten doorlopen onder de knop */
         #chat-box::after {
             content: "";
-            position: absolute;
-            bottom: 100px;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--chat-bg) 100%);
-            pointer-events: none;
+            display: block;
+            height: 80px; /* Exact de hoogte van de knop */
         }
 
-        /* ✅ **Button blijft correct zichtbaar en overlapt niks** */
+        /* ✅ Button correct uitgelijnd en altijd zichtbaar */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -126,9 +121,10 @@
             z-index: 1000;
             width: 100%;
             box-sizing: border-box;
+            height: 80px; /* Zorgt ervoor dat alles goed blijft */
         }
 
-        /* ✅ **Blauwe button correct zichtbaar** */
+        /* ✅ Blauwe button correct zichtbaar */
         #fact-button {
             flex: 1;
             max-width: 90%;
@@ -158,12 +154,18 @@
             }
 
             .input-container {
-                padding: 2rem 1rem;
+                padding: 1rem;
+                height: 90px;
             }
 
             #fact-button {
                 padding: 1.2rem;
                 font-size: 1rem;
+            }
+
+            #chat-box {
+                max-height: calc(100vh - 90px); /* Houd rekening met de mobiele knophoogte */
+                padding-bottom: 90px;
             }
         }
 
