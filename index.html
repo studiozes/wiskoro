@@ -18,24 +18,10 @@
             --chat-bg-dark: #2a2a2a;
             --border-color-light: #ddd;
             --border-color-dark: #444;
-            --button-color-light: #007aff; /* ✅ Blauw in light mode */
-            --button-color-dark: #007aff; /* ✅ Blauw in dark mode */
-            --button-hover-light: #005ecb;
-            --button-hover-dark: #005ecb;
+            --button-color: #007aff !important; /* ✅ Forceren van blauw */
+            --button-hover: #005ecb !important;
             --message-bg-bot-light: #f1f1f1;
             --message-bg-bot-dark: #3a3a3a;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: var(--bg-color-dark);
-                --text-color: var(--text-color-dark);
-                --chat-bg: var(--chat-bg-dark);
-                --border-color: var(--border-color-dark);
-                --button-color: var(--button-color-dark);
-                --button-hover: var(--button-hover-dark);
-                --message-bg-bot: var(--message-bg-bot-dark);
-            }
         }
 
         html, body {
@@ -94,7 +80,7 @@
             margin-right: auto;
         }
 
-        /* ✅ FIX: Blauwe button en blijft altijd onderin */
+        /* ✅ FIX: Blauwe button blijft goed zichtbaar */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -118,8 +104,8 @@
             font-size: 1.2rem;
             border-radius: 2rem;
             border: none;
-            background-color: var(--button-color); /* ✅ Altijd blauw */
-            color: white; /* ✅ Witte tekst */
+            background-color: var(--button-color) !important; /* ✅ Dit forceren */
+            color: white !important; /* ✅ Forceren van witte tekst */
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
@@ -127,7 +113,7 @@
         }
 
         #fact-button:hover {
-            background-color: var(--button-hover);
+            background-color: var(--button-hover) !important;
         }
 
         #fact-button:active {
