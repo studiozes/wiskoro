@@ -20,8 +20,8 @@
             --border-color-dark: #444;
             --button-color: #007aff;
             --button-hover: #005ecb;
-            --fact-bg-light: #d4edda; /* ✅ Lichtgroen voor feiten */
-            --fact-bg-dark: #218c74; /* ✅ Blauwgroen in dark mode */
+            --fact-bg-light: #d4edda;
+            --fact-bg-dark: #218c74;
             --system-bg-light: #e3f2fd;
             --system-bg-dark: #0a74da;
             --button-text: white;
@@ -49,7 +49,7 @@
             background-color: var(--chat-bg);
         }
 
-        /* ✅ FIX: Extra padding zodat berichten NIET achter de knop vallen */
+        /* ✅ FIX: Nog iets MEER padding zodat berichten **NIET onder de knop vallen** */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -57,10 +57,9 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            padding-bottom: 100px !important; /* Vergroot de onderkant om de overlap te fixen */
+            padding-bottom: 120px !important; /* 🔹 Extra ruimte toegevoegd */
         }
 
-        /* ✅ Chatballonnen */
         .message {
             display: block;
             padding: 1rem;
@@ -75,7 +74,6 @@
             align-self: flex-start;
         }
 
-        /* ✅ Feiten hebben een eigen kleur */
         .fact {
             background-color: var(--fact-bg-light) !important;
             color: black !important;
@@ -88,7 +86,6 @@
             color: white !important;
         }
 
-        /* ✅ Systeemberichten in een andere kleur */
         .system {
             background-color: var(--system-bg-light) !important;
             color: black !important;
@@ -109,7 +106,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1.25rem 1rem; /* Extra padding zodat er geen overlap meer is */
+            padding: 1.5rem 1rem; /* 🔹 Extra padding toegevoegd */
             background-color: var(--chat-bg);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
@@ -117,7 +114,7 @@
             box-sizing: border-box;
         }
 
-        /* ✅ Knop in correcte kleur, groter voor betere zichtbaarheid */
+        /* ✅ Knop met **blauwe achtergrond & straattaal-tekst** */
         #fact-button {
             flex: 1;
             max-width: 90%;
@@ -166,16 +163,21 @@
     <div id="chat-container">
         <div id="chat-box" role="log" aria-live="polite"></div>
         <div class="input-container">
-            <button id="fact-button">Geef me nog een feitje</button>
+            <button id="fact-button">🔥 Drop nog een feitje</button>
         </div>
     </div>
 
     <script>
         const backendUrl = "https://api.wiskoro.nl/fact";
+        
+        /* ✅ Button tekst met MEER straattaal/GenZ vibes */
         const buttonFacts = [
-            "Nog een feitje", "Drop nog iets", "Gooi er nog één", 
-            "Vertel me meer", "Wat nog meer?", "Hit me up", "Laat maar horen"
+            "🔥 Drop nog een feitje", "Yo, gooi nog zo’n feit! 🤓", 
+            "Hit me up met wiskunde sauce 🧠", "Wat weet je nog meer? 🤔", 
+            "Nog een, ik ben nog niet vol! 📚", "Tik nog een wiskunde-juweeltje 💎", 
+            "Kom maar door met de kennis! 🚀", "Gimme die facts, bro! 😎"
         ];
+
         const loadingMessages = [
             "Even die brain cells activeren...",
             "Matrix hacken voor je antwoord...",
@@ -183,6 +185,7 @@
             "Wiskunde sauce loading...",
             "Calculations on fleek incoming..."
         ];
+        
         const errorMessages = [
             "Ey g, die server left us on read! 💀 Probeer ff opnieuw!",
             "Nah fam, connection is skeer rn. Check je wifi en probeer nog een x! 🔌",
