@@ -50,7 +50,7 @@
             position: relative;
         }
 
-        /* ✅ **Belangrijkste FIX:** berichten stoppen boven de button */
+        /* ✅ **Laat berichten correct stoppen boven de knop!** */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -58,8 +58,8 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            margin-bottom: 100px; /* 🔹 Zorgt dat berichten niet over de knop komen */
-            padding-bottom: 40px; /* 🔹 Extra ruimte voor smooth scrolling */
+            margin-bottom: 80px; /* 🔹 Voorkomt dat berichten in de knop verdwijnen */
+            max-height: calc(100vh - 120px); /* 🔹 Zorgt dat berichten nooit de knop raken */
         }
 
         .message {
@@ -99,11 +99,11 @@
             color: white;
         }
 
-        /* ✅ **Zorgt voor fade-out effect onderaan de chatbox** */
+        /* ✅ **Fix: Fade-out effect onderaan de chatbox zodat berichten verdwijnen onder de knop** */
         #chat-box::after {
             content: "";
             position: absolute;
-            bottom: 75px;
+            bottom: 100px;
             left: 0;
             right: 0;
             height: 50px;
@@ -111,7 +111,7 @@
             pointer-events: none;
         }
 
-        /* ✅ **Knop blijft zichtbaar & overlap is gefixt** */
+        /* ✅ **Button blijft zichtbaar en overlapt niks** */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -128,7 +128,7 @@
             box-sizing: border-box;
         }
 
-        /* ✅ **Blauwe button netjes uitgelijnd** */
+        /* ✅ **Blauwe button met juiste uitlijning** */
         #fact-button {
             flex: 1;
             max-width: 90%;
