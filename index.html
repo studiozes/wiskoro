@@ -204,7 +204,7 @@
                 messageDiv.classList.add("dark-mode");
             }
 
-            messageDiv.innerHTML = content;
+            messageDiv.textContent = content;
             document.getElementById("chat-box").appendChild(messageDiv);
             document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
         }
