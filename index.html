@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, viewport-fit=cover">
     <meta name="description" content="Wiskoro Chatbot - Je persoonlijke wiskunde G die je door alle sommen heen carried! 🔥">
     <title>Wiskoro Chatbot</title>
     <link rel="preconnect" href="https://rsms.me">
@@ -10,7 +10,6 @@
     <style>
         :root {
             color-scheme: light dark;
-            /* Basis kleuren definities */
             --bg-color-light: #f9f9f9;
             --bg-color-dark: #1e1e1e;
             --text-color-light: #333;
@@ -26,20 +25,10 @@
             --message-bg-bot-light: #f1f1f1;
             --message-bg-bot-dark: #3a3a3a;
             --focus-outline: #4a9eff;
-            
-            /* Default light mode waarden */
-            --bg-color: var(--bg-color-light);
-            --text-color: var(--text-color-light);
-            --chat-bg: var(--chat-bg-light);
-            --border-color: var(--border-color-light);
-            --button-color: var(--button-color-light);
-            --button-hover: var(--button-hover-light);
-            --message-bg-bot: var(--message-bg-bot-light);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                /* Dark mode waarden */
                 --bg-color: var(--bg-color-dark);
                 --text-color: var(--text-color-dark);
                 --chat-bg: var(--chat-bg-dark);
@@ -63,8 +52,6 @@
 
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            line-height: 1.5;
-            text-align: center;
             background-color: var(--bg-color);
             color: var(--text-color);
             display: flex;
@@ -82,8 +69,6 @@
             width: 100%;
             max-width: 100%;
             height: 100vh;
-            margin: 0;
-            padding: 0;
             background-color: var(--chat-bg);
             overflow: hidden;
         }
@@ -107,20 +92,8 @@
         }
 
         @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(0.5rem); 
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0); 
-            }
-        }
-
-        .user {
-            background-color: var(--button-color);
-            color: white;
-            margin-left: auto;
+            from { opacity: 0; transform: translateY(0.5rem); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .bot {
@@ -135,7 +108,6 @@
             left: 0;
             right: 0;
             display: flex;
-            gap: 0.5rem;
             padding: 1rem;
             padding-bottom: calc(1rem + env(safe-area-inset-bottom));
             background-color: var(--chat-bg);
@@ -143,25 +115,7 @@
             z-index: 1000;
             width: 100%;
             box-sizing: border-box;
-            padding-left: max(1rem, env(safe-area-inset-left));
-            padding-right: max(1rem, env(safe-area-inset-right));
-        }
-
-        #user-input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            border: 2px solid var(--border-color);
-            font-size: 1rem;
-            transition: border-color 0.2s;
-            background-color: var(--chat-bg);
-            color: var(--text-color);
-        }
-
-        #user-input:focus {
-            outline: none;
-            border-color: var(--focus-outline);
-            box-shadow: 0 0 0 2px rgba(74, 158, 255, 0.2);
+            justify-content: center;
         }
 
         button {
@@ -180,11 +134,6 @@
             background-color: var(--button-hover);
         }
 
-        button:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--focus-outline);
-        }
-
         button:active {
             transform: scale(0.98);
         }
@@ -197,17 +146,11 @@
             .input-container {
                 padding: 0.75rem;
                 padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-                padding-left: max(0.75rem, env(safe-area-inset-left));
-                padding-right: max(0.75rem, env(safe-area-inset-right));
             }
 
             button {
                 padding: 0.75rem;
                 min-width: 70px;
-            }
-
-            #user-input {
-                padding: 0.75rem;
             }
         }
     </style>
@@ -215,42 +158,30 @@
 <body>
     <div id="chat-container">
         <div id="chat-box" role="log" aria-live="polite"></div>
-        <form class="input-container" onsubmit="handleSubmit(event)">
-            <input 
-                type="text" 
-                id="user-input" 
-                placeholder="Drop je vraag hier, bro..." 
-                aria-label="Je vraag"
-                autocomplete="off"
-            >
-            <button type="submit" id="send-button">Gooi eruit</button>
-        </form>
+        <div class="input-container">
+            <button id="fact-button">Geef me nog een feitje</button>
+        </div>
     </div>
 
     <script>
         const backendUrl = "https://api.wiskoro.nl/chat";
-        const buttonTexts = ["Gooi eruit", "Drop die vraag", "Spit die wiskunde", "Knallen maar", "Tik die som"];
+        const buttonFacts = [
+            "Nog een feitje", "Drop nog iets", "Gooi er nog één", 
+            "Vertel me meer", "Wat nog meer?", "Hit me up", "Laat maar horen"
+        ];
         const welcomeMessages = [
             "Faka, welkom bij Wiskoro! 🔥 Tijd om je wiskunde skills te boosten!", 
             "Yo! Klaar om wiskunde te ownen? Ik fix die uitleg voor je! 📚", 
             "Ey, jij daar! Pak je sommen, want we gaan gas geven op wiskunde! 🚀", 
             "Bro, geen stress! Met Wiskoro maak jij wiskunde je playground!", 
-            "Let's go! Hier leer je wiskunde met de meeste sauce! 🧠💯",
-            "Skeer op wiskunde? Niet meer! Tijd om te shinen met Wiskoro! ✨",
-            "Hé legend! Vandaag is de dag dat je wiskunde mastert! 👑",
-            "Wiskunde is geen drill, maar jij gaat het killen! 💪🔥",
-            "Yo, yo, yo! Pak je brein en let's gooo! 🧠⚡",
-            "Geen paniek, wiskunde wordt easy met Wiskoro! 😎"
+            "Let's go! Hier leer je wiskunde met de meeste sauce! 🧠💯"
         ];
-
         const errorMessages = [
             "Ey g, die server left us on read! 💀 Probeer ff opnieuw!",
             "Nah fam, connection is skeer rn. Check je wifi en probeer nog een x! 🔌",
             "Yo my g, er ging iets fout in de matrix! Refresh die pagina en we gaan door! 🔄",
-            "Broski, de server heeft even een breakdown! Retry die ting! 😤",
-            "Dead internet vibes... Fix je connect en we gaan verder! 📶"
+            "Broski, de server heeft even een breakdown! Retry die ting! 😤"
         ];
-
         const loadingMessages = [
             "Even die brain cells activeren...",
             "Matrix hacken voor je antwoord...",
@@ -258,88 +189,39 @@
             "Wiskunde sauce loading...",
             "Calculations on fleek incoming..."
         ];
-        
-        const sendButton = document.getElementById("send-button");
-        const chatBox = document.getElementById("chat-box");
-        const userInput = document.getElementById("user-input");
-        let isProcessing = false;
 
         function getRandomItem(array) {
             return array[Math.floor(Math.random() * array.length)];
         }
 
         function updateButtonText() {
-            sendButton.textContent = getRandomItem(buttonTexts);
+            document.getElementById("fact-button").textContent = getRandomItem(buttonFacts);
         }
-        
+
         function addMessage(content, type) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
             messageDiv.textContent = content;
-            chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;
-            return messageDiv;
-        }
-        
-        function showWelcomeMessage() {
-            addMessage(getRandomItem(welcomeMessages), 'bot');
+            document.getElementById("chat-box").appendChild(messageDiv);
+            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
         }
 
-        async function handleSubmit(event) {
-            event.preventDefault();
-            
-            const message = userInput.value.trim();
-            if (!message || isProcessing) return;
-
-            isProcessing = true;
-            sendButton.disabled = true;
-            
+        async function fetchFact() {
             try {
-                addMessage(message, 'user');
-                userInput.value = '';
-                updateButtonText();
-
-                const loadingMessage = getRandomItem(loadingMessages);
-                const loadingDiv = addMessage(loadingMessage, 'bot');
-
-                const response = await fetch(backendUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message })
-                });
-
-                loadingDiv.remove();
-
-                if (!response.ok) {
-                    throw new Error('Network response not ok');
-                }
-
+                addMessage(getRandomItem(loadingMessages), 'bot');
+                const response = await fetch(backendUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: "Geef een wiskundefeitje" }) });
+                if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
-                addMessage(data.response || getRandomItem(errorMessages), 'bot');
+                addMessage(data.response, 'bot');
             } catch (error) {
-                console.error('Error:', error);
                 addMessage(getRandomItem(errorMessages), 'bot');
             } finally {
-                isProcessing = false;
-                sendButton.disabled = false;
-                userInput.focus();
+                updateButtonText();
             }
         }
 
-        // Event Listeners
-        document.addEventListener('DOMContentLoaded', () => {
-            showWelcomeMessage();
-            userInput.focus();
-        });
-
-        userInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendButton.click();
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => { addMessage(getRandomItem(welcomeMessages), 'bot'); });
+        document.getElementById("fact-button").addEventListener("click", fetchFact);
     </script>
 </body>
 </html>
