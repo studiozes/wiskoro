@@ -48,7 +48,7 @@
             height: 100vh;
             background-color: var(--chat-bg);
             position: relative;
-            padding-bottom: 110px; /* 🔹 FIX: Zorgt dat berichten niet overlappen met de knop */
+            padding-bottom: 100px; /* 🛠 FIX: Houdt ruimte vrij voor de knop */
         }
 
         /* ✅ **Laat berichten correct stoppen boven de knop** */
@@ -59,7 +59,7 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            max-height: calc(100vh - 130px); /* 🔹 Zorgt dat berichten niet verdwijnen */
+            max-height: calc(100vh - 120px); /* 🛠 FIX: Voorkomt overlap met de button */
         }
 
         .message {
@@ -106,7 +106,7 @@
             bottom: 100px;
             left: 0;
             right: 0;
-            height: 50px;
+            height: 40px;
             background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--chat-bg) 100%);
             pointer-events: none;
         }
@@ -128,7 +128,7 @@
             box-sizing: border-box;
         }
 
-        /* ✅ **Blauwe button met juiste uitlijning** */
+        /* ✅ **Blauwe button correct zichtbaar** */
         #fact-button {
             flex: 1;
             max-width: 90%;
