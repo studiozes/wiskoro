@@ -24,6 +24,8 @@
             --button-hover-dark: #0070e6;
             --message-bg-bot-light: #007aff;
             --message-bg-bot-dark: #0a84ff;
+            --message-text-bot-light: #ffffff;
+            --message-text-bot-dark: #ffffff;
             --focus-outline: #4a9eff;
         }
 
@@ -36,6 +38,7 @@
                 --button-color: var(--button-color-dark);
                 --button-hover: var(--button-hover-dark);
                 --message-bg-bot: var(--message-bg-bot-dark);
+                --message-text-bot: var(--message-text-bot-dark);
             }
         }
 
@@ -89,8 +92,14 @@
 
         .bot {
             background-color: var(--message-bg-bot);
-            color: white;
+            color: var(--message-text-bot-light);
             margin-right: auto;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .bot {
+                color: var(--message-text-bot-dark);
+            }
         }
 
         .input-container {
