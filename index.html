@@ -9,62 +9,40 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     <style>
         :root {
-            color-scheme: light dark;
-            --bg-color-light: #f9f9f9;
-            --bg-color-dark: #1e1e1e;
-            --text-color-light: #333;
-            --text-color-dark: #f5f5f5;
-            --chat-bg-light: #ffffff;
-            --chat-bg-dark: #2a2a2a;
-            --border-color-light: #ddd;
-            --border-color-dark: #444;
-            --button-color-light: #007aff;
-            --button-color-dark: #0a84ff;
-            --button-hover-light: #005ecb;
-            --button-hover-dark: #0070e6;
-            --message-bg-bot-light: #f1f1f1;
-            --message-bg-bot-dark: #3a3a3a;
-            --focus-outline: #4a9eff;
+            --bg-color: #f9f9f9;
+            --text-color: #333;
+            --chat-bg: #ffffff;
+            --message-bg-bot: #f1f1f1;
+            --button-color: #007aff;
+            --button-hover: #005ecb;
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: var(--bg-color-dark);
-                --text-color: var(--text-color-dark);
-                --chat-bg: var(--chat-bg-dark);
-                --border-color: var(--border-color-dark);
-                --button-color: var(--button-color-dark);
-                --button-hover: var(--button-hover-dark);
-                --message-bg-bot: var(--message-bg-bot-dark);
+                --bg-color: #1e1e1e;
+                --text-color: #f5f5f5;
+                --chat-bg: #2a2a2a;
+                --message-bg-bot: #3a3a3a;
+                --button-color: #0a84ff;
+                --button-hover: #0070e6;
             }
         }
 
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
+        body {
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Inter', system-ui, sans-serif;
+            font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
         }
 
         #chat-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
             display: flex;
             flex-direction: column;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-color: var(--chat-bg);
             overflow: hidden;
         }
@@ -73,148 +51,50 @@
             flex: 1;
             overflow-y: auto;
             padding: 1rem;
-            margin-bottom: 80px;
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
         }
 
         .message {
-            margin: 0.5rem 0;
-            padding: 0.75rem 1rem;
-            border-radius: 1rem;
-            max-width: 80%;
-            word-wrap: break-word;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(0.5rem); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .bot {
             background-color: var(--message-bg-bot);
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 0.5rem 0;
+            max-width: 80%;
             color: var(--text-color);
-            margin-right: auto;
         }
 
         .input-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
             display: flex;
             justify-content: center;
             padding: 1rem;
             background-color: var(--chat-bg);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            width: 100%;
-            box-sizing: border-box;
         }
 
         #fact-button {
-            flex: 1;
-            max-width: 90%;
             padding: 1rem;
             font-size: 1rem;
             border-radius: 1rem;
-            border: none;
             background-color: var(--button-color);
             color: white;
-            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            text-align: center;
-        }
-
-        #fact-button:hover {
-            background-color: var(--button-hover);
-        }
-
-        #fact-button:active {
-            transform: scale(0.98);
-        }
-
-        @media (max-width: 480px) {
-            .message {
-                max-width: 90%;
-            }
-
-            .input-container {
-                padding: 0.75rem;
-            }
-
-            #fact-button {
-                padding: 0.75rem;
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <div id="chat-box" role="log" aria-live="polite"></div>
+        <div id="chat-box"></div>
         <div class="input-container">
             <button id="fact-button">Geef me nog een feitje</button>
         </div>
     </div>
 
     <script>
-        const backendUrl = "https://api.wiskoro.nl/fact"; 
-        const buttonFacts = [
-            "Nog een feitje", "Drop nog iets", "Gooi er nog één", 
-            "Vertel me meer", "Wat nog meer?", "Hit me up", "Laat maar horen"
-        ];
-        const loadingMessages = [
-            "Even die brain cells activeren...",
-            "Matrix hacken voor je antwoord...",
-            "Formules spotten zoals een echte G...",
-            "Wiskunde sauce loading...",
-            "Calculations on fleek incoming..."
-        ];
-        const errorMessages = [
-            "Ey g, die server left us on read! 💀 Probeer ff opnieuw!",
-            "Nah fam, connection is skeer rn. Check je wifi en probeer nog een x! 🔌",
-            "Yo my g, er ging iets fout in de matrix! Refresh die pagina en we gaan door! 🔄"
-        ];
-
-        function getRandomItem(array) {
-            return array[Math.floor(Math.random() * array.length)];
-        }
-
-        function updateButtonText() {
-            document.getElementById("fact-button").textContent = getRandomItem(buttonFacts);
-        }
-
-        function addMessage(content, type) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${type}`;
-            messageDiv.textContent = content;
-            document.getElementById("chat-box").appendChild(messageDiv);
-            document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
-        }
-
         async function fetchFact() {
-            try {
-                addMessage(getRandomItem(loadingMessages), 'bot');
-                const response = await fetch(backendUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: "Geef een wiskundefeitje" }) });
-                if (!response.ok) throw new Error('Network error');
-                const data = await response.json();
-                addMessage(data.response, 'bot');
-            } catch (error) {
-                addMessage(getRandomItem(errorMessages), 'bot');
-            } finally {
-                updateButtonText();
-            }
+            const response = await fetch("https://api.wiskoro.nl/fact");
+            const data = await response.json();
+            document.getElementById("chat-box").innerHTML += `<div class='message'>${data.response}</div>`;
         }
-
         document.getElementById("fact-button").addEventListener("click", fetchFact);
-
-        document.addEventListener("DOMContentLoaded", () => {
-            addMessage("Yo! Klaar om wat wiskunde feiten te checken? 🔥 Druk op de knop!", "bot");
-            fetchFact();
-        });
     </script>
 </body>
 </html>
