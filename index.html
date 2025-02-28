@@ -22,8 +22,8 @@
             --button-color-dark: #0a84ff;
             --button-hover-light: #005ecb;
             --button-hover-dark: #0070e6;
-            --message-bg-bot-light: #f1f1f1;
-            --message-bg-bot-dark: #3a3a3a;
+            --message-bg-bot-light: #007aff;
+            --message-bg-bot-dark: #0a84ff;
             --focus-outline: #4a9eff;
         }
 
@@ -80,7 +80,6 @@
             max-width: 80%;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in-out;
-            color: var(--text-color);
         }
 
         @keyframes fadeIn {
@@ -90,6 +89,7 @@
 
         .bot {
             background-color: var(--message-bg-bot);
+            color: white;
             margin-right: auto;
         }
 
@@ -158,7 +158,7 @@
     </div>
 
     <script>
-        const backendUrl = "https://api.wiskoro.nl/chat";
+        const backendUrl = "https://api.wiskoro.nl/fact"; 
         const buttonFacts = [
             "Nog een feitje", "Drop nog iets", "Gooi er nog één", 
             "Vertel me meer", "Wat nog meer?", "Hit me up", "Laat maar horen"
@@ -210,6 +210,7 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             addMessage("Yo! Klaar om wat wiskunde feiten te checken? 🔥 Druk op de knop!", "bot");
+            fetchFact();
         });
     </script>
 </body>
