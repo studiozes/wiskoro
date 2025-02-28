@@ -47,9 +47,10 @@
             width: 100%;
             height: 100vh;
             background-color: var(--chat-bg);
+            position: relative;
         }
 
-        /* ✅ Chatberichten **stoppen** boven de button */
+        /* ✅ **Belangrijkste FIX:** berichten stoppen boven de button */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -57,14 +58,14 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            padding-bottom: 70px !important; /* 🔹 Verlaagd zodat berichten achter de button verdwijnen */
-            margin-bottom: 50px !important; /* 🔹 Ruimte onderaan gecreëerd */
+            margin-bottom: 100px; /* 🔹 Zorgt dat berichten niet over de knop komen */
+            padding-bottom: 40px; /* 🔹 Extra ruimte voor smooth scrolling */
         }
 
         .message {
             display: block;
             padding: 1rem;
-            border-radius: 1.5rem !important;
+            border-radius: 1.5rem;
             max-width: 75%;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in-out;
@@ -76,29 +77,41 @@
         }
 
         .fact {
-            background-color: var(--fact-bg-light) !important;
-            color: black !important;
+            background-color: var(--fact-bg-light);
+            color: black;
             align-self: flex-start;
-            border-top-left-radius: 0.5rem !important;
+            border-top-left-radius: 0.5rem;
         }
 
         .fact.dark-mode {
-            background-color: var(--fact-bg-dark) !important;
-            color: white !important;
+            background-color: var(--fact-bg-dark);
+            color: white;
         }
 
         .system {
-            background-color: var(--system-bg-light) !important;
-            color: black !important;
+            background-color: var(--system-bg-light);
+            color: black;
             align-self: flex-start;
         }
 
         .system.dark-mode {
-            background-color: var(--system-bg-dark) !important;
-            color: white !important;
+            background-color: var(--system-bg-dark);
+            color: white;
         }
 
-        /* ✅ **Input-container zwevend effect** */
+        /* ✅ **Zorgt voor fade-out effect onderaan de chatbox** */
+        #chat-box::after {
+            content: "";
+            position: absolute;
+            bottom: 75px;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--chat-bg) 100%);
+            pointer-events: none;
+        }
+
+        /* ✅ **Knop blijft zichtbaar & overlap is gefixt** */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -115,19 +128,7 @@
             box-sizing: border-box;
         }
 
-        /* ✅ **Fade-effect** zodat berichten subtiel verdwijnen */
-        #chat-box::after {
-            content: "";
-            position: fixed;
-            bottom: 70px;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--chat-bg) 100%);
-            pointer-events: none;
-        }
-
-        /* ✅ **Knop goed zichtbaar houden** */
+        /* ✅ **Blauwe button netjes uitgelijnd** */
         #fact-button {
             flex: 1;
             max-width: 90%;
@@ -135,8 +136,8 @@
             font-size: 1.2rem;
             border-radius: 2rem;
             border: none;
-            background-color: var(--button-color) !important;
-            color: var(--button-text) !important;
+            background-color: var(--button-color);
+            color: var(--button-text);
             font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
@@ -144,7 +145,7 @@
         }
 
         #fact-button:hover {
-            background-color: var(--button-hover) !important;
+            background-color: var(--button-hover);
         }
 
         #fact-button:active {
