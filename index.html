@@ -49,7 +49,7 @@
             background-color: var(--chat-bg);
         }
 
-        /* ✅ **Extra padding onderaan, zodat berichten NIET over de button vallen** */
+        /* ✅ Chatberichten **stoppen** boven de button */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -57,7 +57,8 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            padding-bottom: 150px !important; /* 🔹 Verhoogd voor extra veiligheid */
+            padding-bottom: 70px !important; /* 🔹 Verlaagd zodat berichten achter de button verdwijnen */
+            margin-bottom: 50px !important; /* 🔹 Ruimte onderaan gecreëerd */
         }
 
         .message {
@@ -97,7 +98,7 @@
             color: white !important;
         }
 
-        /* ✅ **Knop correct uitlijnen, geen overlap met berichten** */
+        /* ✅ **Input-container zwevend effect** */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -106,15 +107,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 2rem 1rem; /* 🔹 Extra padding voor kleine schermen */
+            padding: 1.5rem 1rem;
             background-color: var(--chat-bg);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             width: 100%;
             box-sizing: border-box;
         }
 
-        /* ✅ **Button met blauwe achtergrond & straattaal-tekst** */
+        /* ✅ **Fade-effect** zodat berichten subtiel verdwijnen */
+        #chat-box::after {
+            content: "";
+            position: fixed;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, var(--chat-bg) 100%);
+            pointer-events: none;
+        }
+
+        /* ✅ **Knop goed zichtbaar houden** */
         #fact-button {
             flex: 1;
             max-width: 90%;
@@ -144,7 +157,7 @@
             }
 
             .input-container {
-                padding: 2.5rem 1rem; /* 🔹 Extra padding op mobiel zodat button NIET verdwijnt */
+                padding: 2rem 1rem;
             }
 
             #fact-button {
@@ -169,27 +182,12 @@
 
     <script>
         const backendUrl = "https://api.wiskoro.nl/fact";
-        
-        /* ✅ Button tekst met MEER straattaal/GenZ vibes */
+
         const buttonFacts = [
             "🔥 Drop nog een feitje", "Yo, gooi nog zo’n feit! 🤓", 
             "Hit me up met wiskunde sauce 🧠", "Wat weet je nog meer? 🤔", 
             "Nog een, ik ben nog niet vol! 📚", "Tik nog een wiskunde-juweeltje 💎", 
             "Kom maar door met de kennis! 🚀", "Gimme die facts, bro! 😎"
-        ];
-
-        const loadingMessages = [
-            "Even die brain cells activeren...",
-            "Matrix hacken voor je antwoord...",
-            "Formules spotten zoals een echte G...",
-            "Wiskunde sauce loading...",
-            "Calculations on fleek incoming..."
-        ];
-        
-        const errorMessages = [
-            "Ey g, die server left us on read! 💀 Probeer ff opnieuw!",
-            "Nah fam, connection is skeer rn. Check je wifi en probeer nog een x! 🔌",
-            "Yo my g, er ging iets fout in de matrix! Refresh die pagina en we gaan door! 🔄"
         ];
 
         function getRandomItem(array) {
@@ -215,13 +213,13 @@
 
         async function fetchFact() {
             try {
-                addMessage(getRandomItem(loadingMessages), 'system');
+                addMessage("⏳ Wiskunde sauce incoming...", 'system');
                 const response = await fetch(backendUrl, { method: 'GET' });
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
                 addMessage(data.response, 'fact');
             } catch (error) {
-                addMessage(getRandomItem(errorMessages), 'system');
+                addMessage("🚨 Oei, die server doet ff moeilijk! Probeer later nog eens!", 'system');
             } finally {
                 updateButtonText();
             }
