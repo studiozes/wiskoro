@@ -59,28 +59,30 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* ✅ Chatballonnen stijl */
+        /* ✅ Chatballonnen met afgeronde hoeken en verschillende kleuren */
         .message {
             display: inline-block;
             padding: 1rem;
-            border-radius: 1.5rem;
+            border-radius: 1.5rem !important;
             max-width: 75%;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in-out;
             margin: 0.5rem;
             line-height: 1.4;
+            font-weight: 500;
+            font-size: 1rem;
         }
 
         .bot {
-            background-color: var(--fact-bg-light);
-            color: black;
+            background-color: var(--fact-bg-light) !important;
+            color: black !important;
             align-self: flex-start;
-            border-top-left-radius: 0.5rem;
+            border-top-left-radius: 0.5rem !important;
         }
 
         .bot.dark-mode {
-            background-color: var(--fact-bg-dark);
-            color: white;
+            background-color: var(--fact-bg-dark) !important;
+            color: white !important;
         }
 
         /* ✅ Button-container blijft netjes onderin */
