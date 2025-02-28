@@ -24,6 +24,8 @@
             --button-hover-dark: #0070e6;
             --message-bg-bot-light: #f1f1f1;
             --message-bg-bot-dark: #3a3a3a;
+            --message-bg-fact-light: #d0ebff;
+            --message-bg-fact-dark: #005ecb;
             --focus-outline: #4a9eff;
         }
 
@@ -36,6 +38,7 @@
                 --button-color: var(--button-color-dark);
                 --button-hover: var(--button-hover-dark);
                 --message-bg-bot: var(--message-bg-bot-dark);
+                --message-bg-fact: var(--message-bg-fact-dark);
             }
         }
 
@@ -93,6 +96,13 @@
             margin-right: auto;
         }
 
+        .fact {
+            background-color: var(--message-bg-fact);
+            color: var(--text-color);
+            margin-right: auto;
+            font-weight: bold;
+        }
+
         .input-container {
             position: fixed;
             bottom: 0;
@@ -117,7 +127,7 @@
             border-radius: 1rem;
             border: none;
             background-color: var(--button-color);
-            color: white;
+            color: white !important;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s, transform 0.1s;
@@ -185,13 +195,13 @@
         }
 
         function renderMarkdown(text) {
-            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Markdown omzetten naar HTML
+            return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); 
         }
 
         function addMessage(content, type) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
-            messageDiv.innerHTML = renderMarkdown(content); // Markdown verwerken
+            messageDiv.innerHTML = renderMarkdown(content); 
             document.getElementById("chat-box").appendChild(messageDiv);
             document.getElementById("chat-box").scrollTop = document.getElementById("chat-box").scrollHeight;
         }
@@ -202,7 +212,7 @@
                 const response = await fetch(backendUrl);
                 if (!response.ok) throw new Error('Network error');
                 const data = await response.json();
-                addMessage(data.response, 'bot');
+                addMessage(data.response, 'fact');
             } catch (error) {
                 addMessage(getRandomItem(errorMessages), 'bot');
             } finally {
