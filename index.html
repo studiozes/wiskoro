@@ -20,8 +20,8 @@
             --border-color-dark: #444;
             --button-color: #007aff;
             --button-hover: #005ecb;
-            --fact-bg-light: #d4edda; /* ✅ Lichtgroen voor feiten in light mode */
-            --fact-bg-dark: #218c74; /* ✅ Blauwgroen voor feiten in dark mode */
+            --fact-bg-light: #d4edda; /* ✅ Lichtgroen voor feiten */
+            --fact-bg-dark: #218c74; /* ✅ Blauwgroen in dark mode */
             --system-bg-light: #e3f2fd;
             --system-bg-dark: #0a74da;
             --button-text: white;
@@ -49,7 +49,7 @@
             background-color: var(--chat-bg);
         }
 
-        /* ✅ Chatvenster stopt BOVEN de knop */
+        /* ✅ FIX: Extra padding zodat berichten NIET achter de knop vallen */
         #chat-box {
             flex: 1;
             overflow-y: auto;
@@ -57,7 +57,7 @@
             scroll-behavior: smooth;
             display: flex;
             flex-direction: column;
-            padding-bottom: 80px; /* Voorkomt dat berichten achter de knop vallen */
+            padding-bottom: 100px !important; /* Vergroot de onderkant om de overlap te fixen */
         }
 
         /* ✅ Chatballonnen */
@@ -75,7 +75,7 @@
             align-self: flex-start;
         }
 
-        /* ✅ Feitjes hebben nu een eigen kleur */
+        /* ✅ Feiten hebben een eigen kleur */
         .fact {
             background-color: var(--fact-bg-light) !important;
             color: black !important;
@@ -100,7 +100,7 @@
             color: white !important;
         }
 
-        /* ✅ Knop blijft correct onderin */
+        /* ✅ FIX: Knop correct uitlijnen, geen overlap met berichten */
         .input-container {
             position: fixed;
             bottom: 0;
@@ -109,7 +109,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1rem;
+            padding: 1.25rem 1rem; /* Extra padding zodat er geen overlap meer is */
             background-color: var(--chat-bg);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
@@ -117,11 +117,11 @@
             box-sizing: border-box;
         }
 
-        /* ✅ Knop in juiste kleur */
+        /* ✅ Knop in correcte kleur, groter voor betere zichtbaarheid */
         #fact-button {
             flex: 1;
             max-width: 90%;
-            padding: 1.25rem;
+            padding: 1.4rem;
             font-size: 1.2rem;
             border-radius: 2rem;
             border: none;
