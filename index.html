@@ -20,8 +20,8 @@
             --border-color-dark: #444;
             --button-color: #007aff;
             --button-hover: #005ecb;
-            --fact-bg-light: #1f3b67;  /* 🔹 Donkerblauw i.p.v. groen */
-            --fact-bg-dark: #10294d;   /* 🔹 Nog donkerder blauw voor dark mode */
+            --fact-bg-light: #cce5ff;  /* 🔹 Lichter blauw */
+            --fact-bg-dark: #a3c4f3;   /* 🔹 Ook lichter voor dark mode */
             --system-bg-light: #e3f2fd;
             --system-bg-dark: #0a74da;
             --button-text: white;
@@ -74,7 +74,7 @@
 
         .fact {
             background-color: var(--fact-bg-light);
-            color: white;
+            color: var(--text-color-light);
             align-self: flex-start;
             border-top-left-radius: 0.5rem;
             font-weight: bold;
@@ -82,7 +82,7 @@
 
         .fact.dark-mode {
             background-color: var(--fact-bg-dark);
-            color: white;
+            color: var(--text-color-dark);
         }
 
         .system {
