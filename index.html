@@ -22,10 +22,10 @@
             --button-color-dark: #0a84ff;
             --button-hover-light: #005ecb;
             --button-hover-dark: #0070e6;
-            --message-bg-bot-light: #f1f1f1;
-            --message-bg-bot-dark: #3a3a3a;
-            --message-bg-fact-light: #d0ebff;
-            --message-bg-fact-dark: #004ea2;
+            --message-bg-bot-light: #e3e3e3;
+            --message-bg-bot-dark: #444;
+            --message-bg-fact-light: #007aff;
+            --message-bg-fact-dark: #0a84ff;
             --focus-outline: #4a9eff;
         }
 
@@ -83,7 +83,6 @@
             max-width: 80%;
             word-wrap: break-word;
             animation: fadeIn 0.3s ease-in-out;
-            color: var(--text-color) !important;
             display: inline-block;
         }
 
@@ -94,14 +93,16 @@
 
         .bot {
             background-color: var(--message-bg-bot) !important;
+            color: var(--text-color) !important;
             margin-right: auto;
+            text-align: left;
         }
 
         .fact {
             background-color: var(--message-bg-fact) !important;
-            color: #ffffff !important;
-            margin-right: auto;
-            font-weight: normal;
+            color: white !important;
+            margin-left: auto;
+            text-align: left;
         }
 
         .input-container {
